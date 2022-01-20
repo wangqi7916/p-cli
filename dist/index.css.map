@@ -1,0 +1,1 @@
+{"version":3,"file":"index.css","mappings":"AAAA,MAIE,WAAY,CAHZ,mBAAa,CAAb,mBAAa,CAAb,YAAa,CAEb,YAAa,CADb,WAGF,C","sources":["webpack://p-cli/./src/index.css"],"sourcesContent":[".test {\n  display: flex;\n  width: 100px;\n  height: 100px;\n  color: beige;\n}\n"],"names":[],"sourceRoot":""}

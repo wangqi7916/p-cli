@@ -1,0 +1,1 @@
+{"version":3,"file":"test-c46dca6c33704dd3e504.js","mappings":"yBACAA,QAAQC,IAAI,Q","sources":["webpack://p-cli/./src/test.js"],"sourcesContent":["import \"./test.scss\";\nconsole.log(\"test\");\n"],"names":["console","log"],"sourceRoot":""}
