@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 观察者模式：监控一个对象的状态，一旦状态发生变化，马上触发技能
+      // 我们坐在教室就是被观察者
+      // 监控后面的老师就是观察者
+      // 当被观察者触发一些条件的时候，观察者就会触发技能
+
+      // 需要两个构造函数来实现
+      // 1.创建被观察者
+      // =>属性：自己的状态
+      // =>队列：记录有谁观察着自己，数组[]
+      // =>方法：能设置自己的状态，当我们需要改变的时候，要触发这个方法改变状态
+      // =>方法：添加观察者
+      // =>方法：删除观察者
+      // 2.创建观察者
+      // =>需要一个身份证明
+      // =>需要一个技能
+
+      // 观察者构造函数
+      class Observer {
+        constructor(name, fn = () => {}) {
+          this.name = name;
+          this.fn = fn;
+        }
+      }
+      // 创建观察者
+      const bzr = new Observer("班主任", (state) => {
+        console.log("因为：" + state + ",把你家长找来");
+      });
+      const xz = new Observer("校长", (state) => {
+        console.log("因为：" + state + ",骂你的班主任");
+      });
+      const njzr = new Observer("年级主任", (state) => {
+        console.log("因为：" + state + ",你的年级主任");
+      });
+
+      // 被观察者构造函数
+      class Subject {
+        constructor(state) {
+          this.state = state; //记录自己的状态
+          this.observsers = []; //保存观察着我的人
+        }
+
+        // 设置自己的状态
+        setState(val) {
+          this.state = val;
+
+          // 遍历所有观察者，依次触发技能，告诉它我变成了什么状态
+          this.observsers.forEach((item) => {
+            item.fn(this.state);
+          });
+        }
+
+        // 添加观察者
+        addObserver(obs) {
+          this.observsers = this.observsers.filter((item) => item !== obs); //去重；把这个相同的过滤掉，再加新的
+          this.observsers.push(obs);
+          console.log("this.observsers", this.observsers);
+        }
+
+        // 删除观察者
+        delObserver(obs) {
+          this.observsers = this.observsers.filter((item) => item !== obs);
+        }
+      }
+      // 创造一个被观察者
+      const xiaoming = new Subject("学习");
+      xiaoming.addObserver(bzr);
+      xiaoming.addObserver(xz);
+      xiaoming.addObserver(bzr);
+
+      const xiaohong = new Subject("学习");
+      xiaohong.addObserver(bzr);
+      xiaohong.addObserver(xz);
+    </script>
+  </body>
+</html>

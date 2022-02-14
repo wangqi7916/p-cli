@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 单例模式改造
+        // 1.需要把instance变量保存下来
+        // 2.singleTon是一个函数，里面可以判断、可以返回
+        // 3.以闭包形式执行一段代码
+        // 4.为了保存构造函数，把它也写入闭包里
+        // 5.如果你觉得使用需要new，写不写都无所谓
+
+        const Person = (function (){
+            function Person(name,age,gender){
+                this.name = name
+                this.age = age
+                this.gender = gender
+            }
+            Person.prototype.sayHi = function (){console.log('hello');}
+            
+
+            let instance = null
+            return function singleTon(...arg){
+                if(!instance) instance = new Person(...arg)
+                return instance
+            }
+        })()
+
+        // let p1 = Person()
+        // let p2 = Person()
+        // 如果你觉得使用需要new，写不写都无所谓
+        let p1 = new Person('Jack', 18, '男')
+        let p2 = new Person('Luna', 17, '女')
+        console.log(p1,p2);
+        console.log(p1=== p2);
+    </script>
+</body>
+</html>

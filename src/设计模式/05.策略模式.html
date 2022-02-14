@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 策略模式
+        // 一个问题匹配多个解决方案，不一定用到哪个
+        // 而且有可能随时还会继续增加多个方案
+
+        
+
+        // 接收两个参数，价格、折扣种类
+        // 一旦加一种折扣，得手动改函数内部代码，不好
+        // function calcPrice(price,type){
+        //     if(type==='100_10'){
+        //         price-=10
+        //     }else if(type==='200_25'){
+        //         price-=25
+        //     }else if(type==='80%'){
+        //         price*=0.8
+        //     }
+        //     return price
+        // }
+        // calcPrice(100,'100_10')
+
+        // 优化：把我们的多种方案，以闭包形式保存起来
+        // +对外留一个接口
+        // +可以添加和减少
+        // 1.暂时以闭包的形式把折扣方案保存下来
+        // +按照传递进来的折扣和价格计算最终的价格返回
+        // 2.留下添加折扣和删除折扣的接口
+        // +函数也是一个对象
+        // +可以把函数当作一个对象，向里面添加一些成员
+        const calcPrice = (function(){
+            const sale = {
+                '100_10':function (price){return price-=10},
+                '200_25':function (price){return price-=25},
+                '80%':function (price){return price*=0.8}
+            }
+            function calcPrice(price,type){
+                if(!sale[type]) return '没有这个折扣'
+                return sale[type](price)
+            }
+
+            // 把函数当作一个对象，向里面添加一些成员
+            calcPrice.add = function(type,fn){
+                if(sale[type]) return '该折扣已经存在'
+
+                sale[type] = fn
+                return '添加成功'
+            }
+
+            // 删除一个折扣
+            calcPrice.del = function(type){
+                delete sale[type]
+                return '删除成功'
+            }
+
+            return calcPrice
+        })()
+
+        // 使用该折扣的时候，添加一个折扣
+        calcPrice.add('70%',function (price){return price*=0.7})
+        calcPrice.del('200_25')
+        const res1 = calcPrice(320,'200_25')
+        console.log(res1,'res1');
+
+    </script>
+</body>
+</html>

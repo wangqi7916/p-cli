@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 单例模式：一个构造函数一生只能创建一个实例，不管new多少次，都是这一个实例
+        function Person(name,age,gender){
+            this.name = name
+        }
+
+        // 单例模式核心代码start
+        let instance = null
+        function singleTon(...arg){
+            if(!instance) instance = new Person(...arg)
+            return instance
+        }
+        // 单例模式核心代码end
+
+
+        // let per1 = new Person()
+        // let per2 = new Person()
+        let p1 = singleTon('Jack', 18, '男')
+        let p2 = singleTon('Luna', 17, '女')
+        console.log(p1,p2);
+        console.log(p1=== p2);
+    </script>
+</body>
+</html>
